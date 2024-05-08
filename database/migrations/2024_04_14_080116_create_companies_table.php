@@ -15,6 +15,10 @@ return new class extends Migration
             $table->uuid('id');
             $table->string('name');
             $table->string('legal_status');
+            $table->string('email');
+            $table->string('phone_number');
+            $table->uuid('main_contact_id')->nullable();
+            $table->foreign('main_contact_id')->references('users')->on('id');
             $table->timestamps();
         });
     }

@@ -25,6 +25,7 @@ class CompanyPanelProvider extends PanelProvider
         return $panel
             ->id('company')
             ->path('company')
+            ->login()
             ->colors([
                 'primary' => Color::Amber,
             ])

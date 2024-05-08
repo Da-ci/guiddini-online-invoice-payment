@@ -1,3 +1,17 @@
 @import '/vendor/filament/filament/resources/css/theme.css';
 
 @config 'tailwind.config.js';
+
+body {
+    font-family: 'Inter', sans-serif !important;
+    background-color: #000329 !important;
+}
+
+.bg-guiddini-darkblue{
+    background-color: #000329 !important;
+}
+
+.filament-button--primary,
+.filament-button--primary:hover {
+  color: #3b1c84; /* Replace with your desired gray color code */
+}

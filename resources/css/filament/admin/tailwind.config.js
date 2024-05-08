@@ -9,5 +9,6 @@ export default {
         './resources/views/filament/resources/admin/pages/create-admin.blade.php',
         './resources/views/components/users/is-not-active.blade.php',
         './resources/views/components/**/*.php',
+        './resources/views/livewire/**/*.php',
     ],
 }

@@ -10,16 +10,18 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Grid;
+use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Split;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Fieldset;
+use Filament\Resources\Components\Tab;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Filters\QueryBuilder;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Actions\Action;
 use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Forms\Components\PasswordGeneratorField;
 use App\Filament\Resources\UserResource\RelationManagers;
 use Webbingbrasil\FilamentCopyActions\Forms\Actions\CopyAction;
 
@@ -81,6 +83,19 @@ class UserResource extends Resource
             ]);
     }
 
+    public static function getFilters(): array
+    {
+        return [
+            Filter::make('is_admin')
+                ->query(function (QueryBuilder $query, bool $value) {
+                    if ($value) {
+                        $query->where('is_admin', true);
+                    }
+                })
+                ->isHidden(), // Hide the filter from the UI
+        ];
+    }
+
     public static function table(Table $table): Table
     {
         return $table
@@ -99,6 +114,11 @@ class UserResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->where('is_admin', true);
     }
 
     public static function getRelations(): array

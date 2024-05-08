@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class EnsureUserIsActive
+class CheckIsActive
 {
     /**
      * Handle an incoming request.
@@ -15,11 +15,12 @@ class EnsureUserIsActive
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if($request->user()->is_active)
-            return $next($request);
-        else {
-            $view = view('components.users.is-not-active')->render();
+        if (!$request->user()->is_active)
+        {
+            $view = view('components.admin.is-not-active')->render();
             return new Response($view);
         }
+
+        return $next($request);
     }
 }

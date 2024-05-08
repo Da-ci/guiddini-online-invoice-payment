@@ -23,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'company_id',
         'is_admin',
         'is_active',
     ];
@@ -45,4 +46,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+   public function companies()
+   {
+        return $this->belongsToMany(Company::class)->withPivot('is_main_contact');
+   }
+
+
 }

@@ -11,6 +11,16 @@ class Company extends Model
 {
     use HasFactory, HasUuids;
 
-    protected $fillable = ['name', 'legal_status'];
+    protected $fillable = ['name', 'legal_status', 'phone_number', 'email', 'main_contact_id'];
+
+    public function mainContact()
+    {
+        return $this->belongsTo(User::class, 'main_contact_id');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class)->withPivot('is_main_contact');
+    }
 
 }

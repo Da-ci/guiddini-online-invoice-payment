@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Services\SubscriptionPaymentService;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Route::get('/payment/initiate', [SubscriptionPaymentService::class, 'initiatePayment'])->name('payment.initiate');
+Route::get('/payment/process', [SubscriptionPaymentService::class, 'confirmPayment'])->name('payment.process');
+Route::get('/payment/finalize', [SubscriptionPaymentService::class, 'handlePaymentResponse'])->name('payment.finalize');

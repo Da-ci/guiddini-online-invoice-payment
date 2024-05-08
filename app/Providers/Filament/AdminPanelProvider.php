@@ -4,12 +4,16 @@ namespace App\Providers\Filament;
 
 use Filament\Pages;
 use Filament\Panel;
+use App\Models\User;
 use Filament\Widgets;
+use App\Models\Company;
 use Filament\PanelProvider;
 use Filament\Enums\ThemeMode;
 use Filament\Support\Colors\Color;
+use App\Http\Middleware\CheckAdmin;
+use App\Http\Middleware\CheckIsActive;
 use Filament\Http\Middleware\Authenticate;
-use App\Http\Middleware\EnsureUserIsActive;
+use Filament\Support\Facades\FilamentColor;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -54,12 +58,25 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                //custom
-                EnsureUserIsActive::class,
-
             ])
             ->authMiddleware([
                 Authenticate::class,
+                // CheckAdmin::class,
+                // CheckIsActive::class,
+            ], isPersistent: true)
+            ->colors([
+                'danger' => Color::Rose,
+                'gray' => Color::hex('#3b1c84'),
+                'info' => Color::Blue,
+                'primary' => Color::hex('#ffd008'),
+                'success' => Color::Emerald,
+                'warning' => Color::Orange,
             ]);
+        ;
     }
+
+    public function boot(): void
+    {
+    }
+
 }
